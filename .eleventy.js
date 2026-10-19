@@ -3,16 +3,31 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 
+// GitHub Pages serves a project site from /<repo>/ unless a custom domain is
+// set. PATH_PREFIX overrides the default (e.g. "/" for a custom domain or
+// user site); actions/configure-pages passes it automatically in CI.
+function normalizePathPrefix(prefix) {
+  if (!prefix || prefix === "/") {
+    return "/";
+  }
+  let p = prefix.startsWith("/") ? prefix : `/${prefix}`;
+  if (!p.endsWith("/")) {
+    p += "/";
+  }
+  return p;
+}
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.ignores.add("README.md");
 
   // Plugins
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
 
-
-
   // Passthrough copies (static assets)
   eleventyConfig.addPassthroughCopy("assets");
+
+  // GitHub Pages: skip Jekyll processing of the published output
+  eleventyConfig.addPassthroughCopy(".nojekyll");
 
   // Markdown library with anchors for headings
   const md = markdownIt({
@@ -63,6 +78,11 @@ module.exports = function (eleventyConfig) {
   // Pagination size is set per-template via pagination.data.pagination.size
 
   return {
+    pathPrefix: normalizePathPrefix(
+      process.env.PATH_PREFIX !== undefined
+        ? process.env.PATH_PREFIX
+        : "/blog/",
+    ),
     dir: {
       input: ".",
       output: "_site",

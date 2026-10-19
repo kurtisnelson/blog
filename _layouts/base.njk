@@ -7,16 +7,23 @@
       content="width=device-width, initial-scale=1.0"
     />
     <title>{{ title }} | Kurt Nelson's Blog</title>
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="stylesheet"
+      href="{{ '/assets/css/style.css' | url }}"
+    />
+    <link
+      rel="icon"
+      href="{{ '/assets/img/favicon.svg' | url }}"
+      type="image/svg+xml"
+    />
   </head>
   <body>
     <header class="site-header">
       <div class="container">
-        <a href="/" class="site-title">Kurt Nelson's Blog</a>
+        <a href="{{ '/' | url }}" class="site-title">Kurt Nelson's Blog</a>
         <nav class="site-nav">
-          <a href="/">Home</a>
-          <a href="/posts/">All Posts</a>
+          <a href="{{ '/' | url }}">Home</a>
+          <a href="{{ '/posts/' | url }}">All Posts</a>
         </nav>
       </div>
     </header>
