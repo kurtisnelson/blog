@@ -1,0 +1,30 @@
+---
+layout: base
+title: All Posts
+pagination:
+  data: collections.posts
+  size: 10
+  alias: posts
+permalink: /posts/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% endif %}
+eleventyNavigation:
+  key: All Posts
+  order: 1
+---
+
+<h1>All Posts</h1>
+
+<ul class="post-list">
+  {% for post in posts %}
+    <li class="post-list-item">
+      <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+      <time class="post-date">{{ post.date | readableDate }}</time>
+    </li>
+  {% endfor %}
+</ul>
+
+{% if pagination.href.previous %}
+  <a href="{{ pagination.href.previous | url }}">Newer Posts</a>
+{% endif %}
+{% if pagination.href.next %}
+  <a href="{{ pagination.href.next | url }}">Older Posts</a>
+{% endif %}

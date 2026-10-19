@@ -1,0 +1,18 @@
+{
+  "name": "kurtisnelson-blog",
+  "version": "1.0.0",
+  "description": "Kurt Nelson's personal blog, migrated to Eleventy",
+  "private": true,
+  "scripts": {
+    "build": "npx @11ty/eleventy",
+    "serve": "npx @11ty/eleventy --serve",
+    "watch": "npx @11ty/eleventy --watch"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-navigation": "^0.3.5",
+    "luxon": "^3.4.4",
+    "markdown-it": "^13.0.2",
+    "markdown-it-anchor": "^8.6.7"
+  }
+}
