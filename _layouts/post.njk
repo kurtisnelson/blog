@@ -9,7 +9,7 @@ layout: base
   {% if tags and tags.length %}
     <div class="post-tags">
       {% for tag in tags %}
-        <a href="/tags/{{ tag | slug }}/">{{ tag }}</a>
+        <a href="{{ ('/tags/' + (tag | slug) + '/') | url }}">{{ tag }}</a>
       {% endfor %}
     </div>
   {% endif %}
