@@ -1,3 +1,10 @@
+---
+title: "Engineering Collaboration Emails"
+date: 2026-10-18T19:25:13-07:00
+slug: engineering-collab
+tags: []
+---
+
 I've been getting emails about once a month with someone wanting me to commit employment fraud with them. Do these actually last more than a week?
 
 ```plaintext

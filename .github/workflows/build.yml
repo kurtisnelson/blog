@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Sanity-check the output
+        run: |
+          test -f _site/.nojekyll
+          test -f _site/CNAME
+          test "$(cat _site/CNAME)" = "thisisnotajoke.com"
+          find _site -name index.html | grep -q . 
+          test "$(find _site/posts -name index.html | wc -l)" -ge 1
+          test "$(find _site/page -name index.html | wc -l)" -ge 1
