@@ -3,9 +3,9 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 
-// GitHub Pages serves a project site from /<repo>/ unless a custom domain is
-// set. PATH_PREFIX overrides the default (e.g. "/" for a custom domain or
-// user site); actions/configure-pages passes it automatically in CI.
+// The site is deployed at the domain root (thisisnotajoke.com). If it were
+// hosted on a project site instead, PATH_PREFIX=/repo/ would apply; in CI
+// actions/configure-pages supplies the right value automatically.
 function normalizePathPrefix(prefix) {
   if (!prefix || prefix === "/") {
     return "/";
@@ -28,6 +28,9 @@ module.exports = function (eleventyConfig) {
 
   // GitHub Pages: skip Jekyll processing of the published output
   eleventyConfig.addPassthroughCopy(".nojekyll");
+
+  // GitHub Pages: custom domain (served at the domain root)
+  eleventyConfig.addPassthroughCopy("CNAME");
 
   // Markdown library with anchors for headings
   const md = markdownIt({
@@ -81,7 +84,7 @@ module.exports = function (eleventyConfig) {
     pathPrefix: normalizePathPrefix(
       process.env.PATH_PREFIX !== undefined
         ? process.env.PATH_PREFIX
-        : "/blog/",
+        : "/",
     ),
     dir: {
       input: ".",
